@@ -40,3 +40,15 @@ for i in range(num_test):
 # print(testing)
 # print((len(testing)))
 
+
+# example processed tweet
+tweet_example = {}
+tweet_example['images'] = 0.0
+tweet_example['users'] = 1.0
+tweet_example['links'] = 1.0
+tweet_example['.'] = 0.0
+tweet_example['!'] = 0.5
+tweet_example['?'] = 0.0
+tweet_example['...'] = 0.34
+tweet_example['female'] = True
+
