@@ -1,46 +1,29 @@
-from nltk.tokenize import TweetTokenizer
-import re
+import numpy as np
+
+from sklearn import svm
 
 
-# funtcion gets tweet and returns
-# list of tokens from that tweet
-def tokenize_tweet(tweet):
-    tknzr = TweetTokenizer()
-    return tknzr.tokenize(tweet)
+class Classifier:
 
+    def __init__(self):
+        self.svc = svm.SVC()
 
+    def train_model(self, training_data, target_vector):
+        training_vector = self.__prepare_data(training_data)
+        self.svc.fit(training_vector, target_vector)
 
-# function that preprocess the tweets
-def preprocessTweet(tweet):
+    def test_model(self, test_data):
+        test_vector = self.__prepare_data(test_data)
+        return self.svc.predict(test_vector)
 
-    # convert to lowercase
-    tweet = tweet.lower()
+    def __prepare_data(self, data):
+        dimensions = (len(data), len(data[0]))
+        input_vector = np.zeros(dimensions)
 
-    # convert www. or https:// to URL
-    tweet = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', tweet)
+        i = 0
+        for instance in data:
+            j = 0
+            for _, feature in instance.items():
+                input_vector[i, j] = feature
 
-    # remove additional white spaces if needed
-    # tweet = re.sub('[\s]+', ' ', tweet)
-
-    # replaces hashtag words to actual words
-    tweet = re.sub(r'#([^\s]+)', r'\1', tweet)
-
-    return tweet
-
-
-# reads the tweets
-fp = open('file.txt', 'r')
-line = fp.readline()
-
-while line:
-    processedTweet = preprocessTweet(line)
-    print(processedTweet)
-    line = fp.readline()
-
-# close the filereader
-fp.close()
-
-test_tweet = "This is a cooool #dummysmiley: :-) :-P <3 and some arrows < > -> <--"
-
-print(tokenize_tweet(test_tweet))
-
+        return input_vector

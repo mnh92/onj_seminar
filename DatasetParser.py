@@ -17,14 +17,14 @@ def __process_tweet(tweet_html):
     tweet_processed = {}
     soup = BeautifulSoup(tweet_html, 'html.parser')
     all_links = soup.find_all('a')
-    users, images, hashtags, links = __process_links(all_links)
+    users, images, hashtags, links = process_links(all_links)
     tweet_processed['users'] = 1.0 if len(users) > 0 else 0.0
     tweet_processed['images'] = 1.0 if len(images) > 0 else 0.0
     tweet_processed['hashtags'] = 1.0 if len(hashtags) > 0 else 0.0
     tweet_processed['links'] = 1.0 if len(links) > 0 else 0.0
 
     tweet_text = ''.join(soup.findAll(text=True))
-    dot_count, question_count, exclamation_count, ellipsis_count = __process_punctuation(tweet_text)
+    dot_count, question_count, exclamation_count, ellipsis_count = process_punctuation(tweet_text)
     total_punctuation = dot_count + question_count + exclamation_count + ellipsis_count
 
     tweet_processed['.'] = dot_count / total_punctuation if total_punctuation > 0 else 0.0
@@ -34,7 +34,7 @@ def __process_tweet(tweet_html):
     return tweet_processed
 
 
-def __process_links(links):
+def process_links(links):
     users = []
     images = []
     hashtags = []
@@ -52,7 +52,7 @@ def __process_links(links):
     return users, images, hashtags, others
 
 
-def __process_punctuation(text):
+def process_punctuation(text):
     dot_count = 0
     question_count = 0
     exclamation_count = 0
