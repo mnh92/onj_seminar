@@ -41,6 +41,7 @@ class Tester:
         print('accuracy', acc)
         end = time.time()
         print('total time: ', end - start)
+        return acc
 
     def __split_data(self):
         testing = []
