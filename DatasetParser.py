@@ -43,7 +43,9 @@ def process_links(links):
     others = []
 
     for link in links:
-        if link['class'][0] == 'twitter-atreply':
+        if not link.has_attr('class'):
+            others.append(link)
+        elif link['class'][0] == 'twitter-atreply':
             users.append(link)
         elif link['class'][0] == 'twitter-timeline-link':
             images.append(link)
@@ -51,6 +53,7 @@ def process_links(links):
             hashtags.append(link)
         else:
             others.append(link)
+
     return users, images, hashtags, others
 
 

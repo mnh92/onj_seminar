@@ -11,8 +11,13 @@ class Tester:
         self.folder = folder
 
     def run_evaluation(self):
+        print('Evaluation start')
         training, testing = self.__split_data()
-        training_classes = self.__get_classes(training)
+        print('preparing data...')
+        training_data, target_vector = self.__prepare_training_data(training)
+        classifier = Classifier.Classifier()
+        print('training model...')
+        classifier.train_model(training_data, target_vector)
 
     def __split_data(self):
         testing = []
@@ -37,3 +42,28 @@ class Tester:
                 gender = truth_line.split(':::')[1]
                 classes[file] = 1.0 if gender == 'FEMALE' else 0.0
         return classes
+
+    def __prepare_training_data(self, training):
+        training_data = []
+        target_vector = None
+        training_classes = self.__get_classes(training)
+        for datafile in training:
+            features = self.__get_features(datafile)
+            if len(features) > 0:
+                training_data.extend(features)
+                if training_classes[datafile] == 1.0:
+                    target = np.ones((len(features), 1))
+                else:
+                    target = np.zeros((len(features), 1))
+                if target_vector is None:
+                    target_vector = target
+                else:
+                    target_vector = np.concatenate((target_vector, target))
+        return training_data, target_vector
+
+    def __prepare_testing_data(self, testing):
+        pass
+
+    def __get_features(self, datafile):
+        with open(self.folder + '/' + datafile, 'r') as file:
+            return dp.parse_file(file)
