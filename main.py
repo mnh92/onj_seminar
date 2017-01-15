@@ -26,17 +26,21 @@ testing = []
 # list with all the names of files in folder
 training = os.listdir(folder)
 training.remove("truth.txt")
-print(len(training))
+# print(len(training))
 
 
 num_test = int(len(training) * 0.1)
-print(num_test)
+# print(num_test)
 
 for i in range(num_test):
-    # randomly select one file and add it to test list
-    testing.append(random.choice(training))
-    # then remove it from training list
-    training.remove(random.choice(training))
+    # randomly select one file from training set
+    random_file = random.choice(training)
+
+    # append that file to testing set
+    testing.append(random_file)
+
+    # then remove that same file from training set
+    training.remove(random_file)
 
 
 # print(training)
