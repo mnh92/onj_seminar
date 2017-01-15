@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import warnings
 
 from bs4 import BeautifulSoup
 from nltk.tokenize import wordpunct_tokenize
@@ -16,6 +17,7 @@ def parse_file(file):
 
 
 def process_tweet(tweet_html):
+    warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
     tweet_processed = {}
     soup = BeautifulSoup(tweet_html, 'html.parser')
     all_links = soup.find_all('a')

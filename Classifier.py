@@ -10,7 +10,7 @@ class Classifier:
 
     def train_model(self, training_data, target_vector):
         training_vector = self.__prepare_data(training_data)
-        self.svc.fit(training_vector, target_vector)
+        self.svc.fit(training_vector, target_vector.ravel())
 
     def test_model(self, test_data):
         test_vector = self.__prepare_data(test_data)
