@@ -24,6 +24,7 @@ class Classifier:
         for instance in data:
             j = 0
             for _, feature in instance.items():
-                input_vector[i, j] = feature
-
+                input_vector[i][j] = feature
+                j += 1
+            i += 1
         return input_vector
