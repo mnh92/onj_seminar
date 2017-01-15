@@ -1,15 +1,5 @@
-import DatasetParser as dp
-import os, random
-import Classifier
-import numpy as np
-
-# example file
-with open('example_data/0a9e35fd6f123137d585a482f2484d8e.xml', 'r') as file:
-    training_instances = dp.parse_file(file)
-    classifier = Classifier.Classifier()
-    target = np.zeros((len(training_instances), 1))
-    target[0, 0] = 1.0
-    classifier.train_model(training_instances, target)
+import Tester
+import random, os
 
 # path to folder with data
 folder = 'pan16-author-profiling-training-dataset-english-2016-04-25'
@@ -47,3 +37,8 @@ for i in range(num_test):
 # print(len(training))
 # print(testing)
 # print((len(testing)))
+
+folder = 'pan16-author-profiling-twitter-downloader/pan16-author-profiling-training-dataset-english-2016-04-25'
+tester = Tester.Tester(folder)
+tester.run_evaluation()
+
