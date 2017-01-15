@@ -4,9 +4,10 @@ folder = 'pan16-author-profiling-twitter-downloader/pan16-author-profiling-train
 #folder = 'small_sample'
 tester = Tester.Tester(folder)
 
-k = 3
+k = 10
 acc = 0.0
-for _ in range(k):
+for i in range(k):
+    print('Evaluation: ', i)
     acc += tester.run_evaluation()
 
 acc /= k

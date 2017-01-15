@@ -6,9 +6,10 @@ from sklearn import svm
 class Classifier:
 
     def __init__(self):
-        self.svc = svm.SVC()
+        self.svc = None
 
     def train_model(self, training_data, target_vector):
+        self.svc = svm.SVC()
         training_vector = self.__prepare_data(training_data)
         self.svc.fit(training_vector, target_vector.ravel())
 
