@@ -41,12 +41,14 @@ class Tester:
         print('accuracy', acc)
         end = time.time()
         print('total time: ', end - start)
+        return acc
 
     def __split_data(self):
         testing = []
         training = os.listdir(self.folder)
         training.remove("truth.txt")
-        training.remove(".DS_Store")
+        if '.DS_Store' in training:
+            training.remove(".DS_Store")
         num_test = int(len(training) * 0.1)
 
         for i in range(num_test):
@@ -99,6 +101,5 @@ class Tester:
         hits = 0
         for i in range(0, l):
             if prediction[i] == targets[i]:
-                print(prediction[i])
                 hits += 1
         return hits / l
