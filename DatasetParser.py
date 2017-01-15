@@ -9,11 +9,13 @@ def parse_file(file):
     tweets = []
 
     for document in xml_tree.iterfind('documents/document'):
-        tweets.append(__process_tweet(document.text))
+        text = document.text
+        if text is not None:
+            tweets.append(process_tweet(text))
     return tweets
 
 
-def __process_tweet(tweet_html):
+def process_tweet(tweet_html):
     tweet_processed = {}
     soup = BeautifulSoup(tweet_html, 'html.parser')
     all_links = soup.find_all('a')
